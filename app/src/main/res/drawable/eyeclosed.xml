@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+  
+  <!-- Face circle -->
+  <path
+      android:fillColor="#FFE0B2"
+      android:pathData="M100,20 C139.77,20 172,52.23 172,92 C172,131.77 139.77,164 100,164 C60.23,164 28,131.77 28,92 C28,52.23 60.23,20 100,20 Z"/>
+  
+  <!-- Left closed eye -->
+  <path
+      android:fillColor="#5D4037"
+      android:strokeColor="#3E2723"
+      android:strokeWidth="2"
+      android:pathData="M65,85 Q75,82 85,85 Q75,88 65,85 Z"/>
+  
+  <!-- Right closed eye -->
+  <path
+      android:fillColor="#5D4037"
+      android:strokeColor="#3E2723"
+      android:strokeWidth="2"
+      android:pathData="M115,85 Q125,82 135,85 Q125,88 115,85 Z"/>
+  
+  <!-- Nose -->
+  <path
+      android:fillColor="#FFCC02"
+      android:pathData="M100,95 L102,105 L98,105 Z"/>
+  
+  <!-- Mouth (peaceful) -->
+  <path
+      android:strokeColor="#8D6E63"
+      android:strokeWidth="3"
+      android:strokeLineCap="round"
+      android:pathData="M90,120 Q100,125 110,120"/>
+  
+  <!-- Peaceful expression lines -->
+  <path
+      android:strokeColor="#BCAAA4"
+      android:strokeWidth="1"
+      android:pathData="M55,75 Q65,73 75,75"/>
+  
+  <path
+      android:strokeColor="#BCAAA4"
+      android:strokeWidth="1"
+      android:pathData="M125,75 Q135,73 145,75"/>
+      
+</vector>
