@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Eye Rest Reminder</string>
+    <string name="start_reminder">Start Eye Rest Reminder</string>
+    <string name="stop_reminder">Stop Eye Rest Reminder</string>
+    <string name="reminder_started">Eye rest reminders started</string>
+    <string name="reminder_stopped">Eye rest reminders stopped</string>
+    <string name="eye_rest_notification_title">Eye Rest Time!</string>
+    <string name="eye_rest_notification_text">Take a 20-second break and look at something 20 feet away</string>
+    <string name="notification_channel_name">Eye Rest Reminders</string>
+    <string name="notification_channel_description">Notifications for eye rest reminders</string>
+</resources>
