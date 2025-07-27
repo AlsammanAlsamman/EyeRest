@@ -42,15 +42,15 @@ class EyeRestReceiver : BroadcastReceiver() {
                 "rest" -> startWorkPhase(context, preferencesManager, notificationHelper)
             }
         } else {
-            // Update progress notification
+            // Only show notifications at specific warning time
             val remainingMinutes = ((totalDurationMs - elapsedTime) / 60000).toInt()
             
             if (preferencesManager.currentPhase == "work") {
-                notificationHelper.showWorkTimeNotification(remainingMinutes)
-                
-                // Check if we should show warning notification
-                if (remainingMinutes == preferencesManager.warningMinutes && remainingMinutes > 0) {
+                // Only show warning notification at the specified warning time (once per work session)
+                if (remainingMinutes == preferencesManager.warningMinutes && 
+                    remainingMinutes > 0 && !preferencesManager.warningShown) {
                     notificationHelper.showWarningNotification(remainingMinutes)
+                    preferencesManager.warningShown = true
                 }
             }
             
@@ -77,9 +77,10 @@ class EyeRestReceiver : BroadcastReceiver() {
     private fun startWorkPhase(context: Context, preferencesManager: PreferencesManager, notificationHelper: NotificationHelper) {
         preferencesManager.currentPhase = "work"
         preferencesManager.timerStartTime = System.currentTimeMillis()
+        preferencesManager.warningShown = false // Reset warning flag for new work session
         
         notificationHelper.cancelRestNotification()
-        notificationHelper.showWorkTimeNotification(preferencesManager.workMinutes)
+        // Don't show work notification immediately - only show warning at specified time
         
         scheduleNextTick(context)
     }

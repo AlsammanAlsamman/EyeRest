@@ -13,6 +13,7 @@ class PreferencesManager(context: Context) {
         private const val KEY_IS_TIMER_RUNNING = "is_timer_running"
         private const val KEY_TIMER_START_TIME = "timer_start_time"
         private const val KEY_CURRENT_PHASE = "current_phase" // "work" or "rest"
+        private const val KEY_WARNING_SHOWN = "warning_shown"
         
         private const val DEFAULT_WORK_MINUTES = 20
         private const val DEFAULT_REST_MINUTES = 2
@@ -46,9 +47,14 @@ class PreferencesManager(context: Context) {
         get() = sharedPreferences.getString(KEY_CURRENT_PHASE, "work") ?: "work"
         set(value) = sharedPreferences.edit().putString(KEY_CURRENT_PHASE, value).apply()
     
+    var warningShown: Boolean
+        get() = sharedPreferences.getBoolean(KEY_WARNING_SHOWN, false)
+        set(value) = sharedPreferences.edit().putBoolean(KEY_WARNING_SHOWN, value).apply()
+    
     fun resetTimer() {
         isTimerRunning = false
         timerStartTime = 0L
         currentPhase = "work"
+        warningShown = false
     }
 }
