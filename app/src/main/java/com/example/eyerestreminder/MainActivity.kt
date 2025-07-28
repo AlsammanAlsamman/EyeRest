@@ -6,10 +6,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.provider.Settings
 import android.widget.Button
 import android.widget.SeekBar
@@ -163,6 +165,24 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                 startActivity(intent)
                 return
+            }
+        }
+        
+        checkBatteryOptimization()
+    }
+
+    private fun checkBatteryOptimization() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+            if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
+                val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                intent.data = Uri.parse("package:$packageName")
+                try {
+                    startActivity(intent)
+                    Toast.makeText(this, "Please allow app to ignore battery optimization for reliable alarms", Toast.LENGTH_LONG).show()
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Please disable battery optimization for this app in settings", Toast.LENGTH_LONG).show()
+                }
             }
         }
         

@@ -31,12 +31,17 @@ class NotificationHelper(private val context: Context) {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Eye Rest Reminders"
-            val descriptionText = "Notifications for eye rest reminders"
+            val descriptionText = "Critical notifications for eye rest reminders"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
                 enableVibration(true)
+                vibrationPattern = longArrayOf(0, 1000, 500, 1000)
                 setSound(getCustomSound(), null)
+                setBypassDnd(true) // Bypass Do Not Disturb
+                enableLights(true)
+                lightColor = android.graphics.Color.RED
+                lockscreenVisibility = android.app.Notification.VISIBILITY_PUBLIC
             }
             
             val notificationManager: NotificationManager =
@@ -119,9 +124,13 @@ class NotificationHelper(private val context: Context) {
             .setContentText("Take a $restMinutes minute break and look at something 20 feet away")
             .setContentIntent(pendingIntent)
             .addAction(R.drawable.ic_cancel, "Cancel", cancelPendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setAutoCancel(false)
             .setOngoing(true)
+            .setFullScreenIntent(pendingIntent, true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setVibrate(longArrayOf(0, 1000, 500, 1000))
             .build()
         
         with(NotificationManagerCompat.from(context)) {
@@ -143,10 +152,14 @@ class NotificationHelper(private val context: Context) {
             .setContentTitle("⚠️ Eye Rest Warning")
             .setContentText("Eye rest break in $minutesRemaining minutes! Prepare to take a break.")
             .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setAutoCancel(true)
             .setSound(getCustomSound())
-            .setVibrate(longArrayOf(0, 500, 200, 500))
+            .setVibrate(longArrayOf(0, 1000, 500, 1000, 500, 1000))
+            .setFullScreenIntent(pendingIntent, true) // This will wake the device
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setOngoing(false)
             .build()
         
         with(NotificationManagerCompat.from(context)) {
